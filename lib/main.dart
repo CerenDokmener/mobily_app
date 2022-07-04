@@ -1,11 +1,13 @@
+import 'package:firedart/firestore/firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:mobily_app/screens/products_page.dart';
-import 'models/leg_models.dart';
-import 'models/product.dart';
 import 'screens/legs_page.dart';
+
+const apiKey = 'AIzaSyDgZE97hyCx9gcpR6iP7c_pzXedFPO7mgY'; 
+const projectId = 'sima-e84ef';
 
 void main() {
   //Get.put(FormController()); // controller init
+  Firestore.initialize(projectId);
   runApp(const MyApp());
 }
 

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mobily_app/main.dart';
-import 'package:mobily_app/models/leg_models.dart';
+import 'package:mobily_app/models/leg_model.dart';
+import 'package:mobily_app/services/cloud_functions.dart';
 import 'package:mobily_app/widgets/top_nav_bar.dart';
-import 'package:provider/provider.dart';
 
-import '../models/leg_colors.dart';
+import '../models/leg_color.dart';
 import '../widgets/legsColors_list_view.dart';
 import '../widgets/legs_list_view.dart';
 
@@ -16,8 +16,6 @@ class LegsPage extends StatefulWidget {
 }
 
 class _LegsPageState extends State<LegsPage> {
-  List<LegsModels> legsModels = [];
-  List<LegsColors> legsColors = [];
   Widget mainImage(double width_size, double height_size, double padding_size) {
     return Row(
       children: [
@@ -42,13 +40,8 @@ class _LegsPageState extends State<LegsPage> {
     );
   }
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  final myLegModelController = TextEditingController();
-  final myLegColorController = TextEditingController();
+  final legModelController = TextEditingController();
+  final legColorController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +52,7 @@ class _LegsPageState extends State<LegsPage> {
             width: 400.0,
             child: TextField(
               cursorWidth: 2.0,
-              controller: myLegModelController,
+              controller: legModelController,
             ),
           ),
           SizedBox(
@@ -67,12 +60,14 @@ class _LegsPageState extends State<LegsPage> {
           ),
           FloatingActionButton(
             backgroundColor: Color.fromRGBO(151, 54, 20, 1),
-            onPressed: () {
-              legsModels.add(
-                LegsModels(leg_model: (myLegModelController.text)),
-              );
-              setState(() {});
-            },
+            onPressed: () async{
+
+              await addItem('legModel', legModelController.text);
+            // await addLeg(legModelController.text);
+            setState(() {
+              legModelController.clear();
+            });
+          },
             tooltip: 'Show me the value!',
             child: const Icon(
               Icons.add,
@@ -90,7 +85,7 @@ class _LegsPageState extends State<LegsPage> {
             width: 400.0,
             child: TextField(
               cursorWidth: 2.0,
-              controller: myLegColorController,
+              controller: legColorController,
             ),
           ),
           SizedBox(
@@ -98,12 +93,13 @@ class _LegsPageState extends State<LegsPage> {
           ),
           FloatingActionButton(
             backgroundColor: Color.fromRGBO(151, 54, 20, 1),
-            onPressed: () {
-              legsColors.add(
-                LegsColors(leg_color: (myLegColorController.text)),
-              );
-              setState(() {});
-            },
+            onPressed: () async{
+
+            await addItem('legColor',legColorController.text);
+            setState(() {
+              legColorController.clear();
+            });
+          },
             tooltip: 'Show me the value!',
             child: const Icon(
               Icons.add,
@@ -137,7 +133,7 @@ class _LegsPageState extends State<LegsPage> {
                     child: Container(
                         width: 400.0,
                         height: 200.0,
-                        child: LegsListView(legsModels: legsModels))),
+                        child: const LegsListView())),
                 addLegModel(),
               ],
             ),
@@ -155,7 +151,7 @@ class _LegsPageState extends State<LegsPage> {
                     child: Container(
                         width: 400.0,
                         height: 200.0,
-                        child: LegsColorsListView(legsColors: legsColors))),
+                        child:  LegsColorsListView())),
                 addLegColor(),
               ],
             ),
