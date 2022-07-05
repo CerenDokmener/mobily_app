@@ -15,6 +15,7 @@ class _ProductsListViewState extends State<ProductsListView> {
     return SingleChildScrollView(
       child: Column(children: [
         ListView.builder(
+            primary: false,
             physics: AlwaysScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: widget.products.length,

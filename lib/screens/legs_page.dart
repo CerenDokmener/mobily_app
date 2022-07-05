@@ -59,15 +59,15 @@ class _LegsPageState extends State<LegsPage> {
             height: 30,
           ),
           FloatingActionButton(
+            heroTag: null,
             backgroundColor: Color.fromRGBO(151, 54, 20, 1),
-            onPressed: () async{
-
+            onPressed: () async {
               await addItem('legModel', legModelController.text);
-            // await addLeg(legModelController.text);
-            setState(() {
-              legModelController.clear();
-            });
-          },
+              // await addLeg(legModelController.text);
+              setState(() {
+                legModelController.clear();
+              });
+            },
             tooltip: 'Show me the value!',
             child: const Icon(
               Icons.add,
@@ -92,14 +92,14 @@ class _LegsPageState extends State<LegsPage> {
             height: 30,
           ),
           FloatingActionButton(
+            heroTag: null,
             backgroundColor: Color.fromRGBO(151, 54, 20, 1),
-            onPressed: () async{
-
-            await addItem('legColor',legColorController.text);
-            setState(() {
-              legColorController.clear();
-            });
-          },
+            onPressed: () async {
+              await addItem('legColor', legColorController.text);
+              setState(() {
+                legColorController.clear();
+              });
+            },
             tooltip: 'Show me the value!',
             child: const Icon(
               Icons.add,
@@ -151,7 +151,7 @@ class _LegsPageState extends State<LegsPage> {
                     child: Container(
                         width: 400.0,
                         height: 200.0,
-                        child:  LegsColorsListView())),
+                        child: LegsColorsListView())),
                 addLegColor(),
               ],
             ),
