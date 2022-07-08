@@ -1,14 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:mobily_app/models/fabric.dart';
 import 'package:mobily_app/screens/products_page.dart';
 import 'package:mobily_app/widgets/fabric_list_view.dart';
 
 import '../widgets/top_nav_bar.dart';
 
 class FabricPage extends StatefulWidget {
-  FabricPage({Key? key}) : super(key: key);
+  const FabricPage({Key? key}) : super(key: key);
 
   @override
   State<FabricPage> createState() => _FabricPageState();

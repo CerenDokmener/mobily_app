@@ -1,5 +1,13 @@
+import 'dart:async';
+
+import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_connect/sockets/src/socket_notifier.dart';
+import 'package:mobily_app/models/product.dart';
+import 'package:mobily_app/screens/fabric_page.dart';
 import 'package:mobily_app/screens/products_page.dart';
+import 'package:mobily_app/services/cloud_functions.dart';
+import 'package:mobily_app/widgets/products.list.view.dart';
 
 import '../screens/legs_page.dart';
 
@@ -108,8 +116,19 @@ class _NavBarItemState extends State<NavBarItem> {
         color: Colors.transparent,
         child: InkWell(
           onTap: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => ProductsPage()));
+            switch (widget.text) {
+              case 'Modeller': break;
+              case 'Ürünler':
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductsPage())); 
+                break;
+                case 'Kumaşlar':  
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const FabricPage()));
+                break;
+                case 'Ayaklar':  
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LegsPage())); 
+                break;
+              default:
+            }
           },
           child: Container(
             height: 60.0,

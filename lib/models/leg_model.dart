@@ -18,7 +18,9 @@ class Leg {
  
 CollectionReference legModelsCollection = collectionOfItem('LegModels');
 
-final Stream<List<Document>> legModelsStream = streamOfCollection(legModelsCollection);
+Stream<List<Document>> legModelsStream = streamOfCollection(legModelsCollection);
+
+/*
 
 addLeg(String legModel) async{
 
@@ -30,4 +32,4 @@ addLeg(String legModel) async{
         }
 }     
 
-      
+*/

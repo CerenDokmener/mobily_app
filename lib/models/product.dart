@@ -1,10 +1,37 @@
-import 'package:equatable/equatable.dart';
+import 'package:firedart/firedart.dart';
+import '../services/cloud_functions.dart';
 
-class Products {
-  final String numbers;
-  final String ad;
-  Products({this.numbers = '', this.ad = ' '});
 
-  @override
-  List<Object> get props => [numbers];
+class Product {
+  final String productName;
+  Product(
+      {required this.productName,
+      });
+
+ Map<String, dynamic> getDataMap() {
+    return {
+      "productName": productName,
+    };
+  }
+
 }
+ 
+CollectionReference productsCollection = collectionOfItem('ProductNames');
+
+Stream<List<Document>> productsStream = streamOfCollection(productsCollection);
+
+/*
+
+addProduct(String productName) async{
+
+        if(!productName.isEmpty){
+                  Product productToAdd = Product(
+                   productName:productName,
+                   );                
+                productNamesCollection.document(productName).set(productToAdd.getDataMap());
+        }
+}  
+
+*/
+
+      

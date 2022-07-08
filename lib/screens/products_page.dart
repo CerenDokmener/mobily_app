@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mobily_app/models/product.dart';
 import 'package:mobily_app/widgets/products.list.view.dart';
+import '../services/cloud_functions.dart';
 
 import '../widgets/top_nav_bar.dart';
+
 
 class ProductsPage extends StatefulWidget {
   ProductsPage({Key? key}) : super(key: key);
@@ -12,7 +13,6 @@ class ProductsPage extends StatefulWidget {
 }
 
 class _ProductsPageState extends State<ProductsPage> {
-  List<Products> products = [];
 
   Widget mainImage(double width_size, double height_size, double padding_size) {
     return Row(
@@ -43,7 +43,9 @@ class _ProductsPageState extends State<ProductsPage> {
     super.initState();
   }
 
-  final myController = TextEditingController();
+
+
+  final productController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +56,7 @@ class _ProductsPageState extends State<ProductsPage> {
             width: 400.0,
             child: TextField(
               cursorWidth: 2.0,
-              controller: myController,
+              controller: productController,
             ),
           ),
           SizedBox(
@@ -62,10 +64,11 @@ class _ProductsPageState extends State<ProductsPage> {
           ),
           FloatingActionButton(
             backgroundColor: Color.fromRGBO(151, 54, 20, 1),
-            onPressed: () {
-              products.add(Products(numbers: (myController.text)));
-
-              setState(() {});
+            onPressed: () async {
+              await addItem('productName', productController.text);
+              setState(() {
+                productController.clear();
+              });
             },
             tooltip: 'Show me the value!',
             child: const Icon(
@@ -76,6 +79,7 @@ class _ProductsPageState extends State<ProductsPage> {
         ],
       );
     }
+
 
     return Scaffold(
       body: Column(
@@ -88,7 +92,7 @@ class _ProductsPageState extends State<ProductsPage> {
           Column(
             children: [
               Text(
-                'ürünler',
+                'Ürünler',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               Align(
@@ -96,9 +100,8 @@ class _ProductsPageState extends State<ProductsPage> {
                   child: Container(
                       width: 400.0,
                       height: 200.0,
-                      child: ProductsListView(
-                        products: products,
-                      ))),
+                      child: const ProductsListView()
+                      )),
               addNewData(),
             ],
           ),

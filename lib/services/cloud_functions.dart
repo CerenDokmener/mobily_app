@@ -25,7 +25,6 @@ Stream<List<Document>> streamOfCollection(CollectionReference collectionReferenc
 
 
 
-
 class Item {
   final String itemType,itemDetail;
   Item(

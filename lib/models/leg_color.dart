@@ -18,7 +18,9 @@ class LegC {
  
 CollectionReference legColorsCollection = collectionOfItem('LegColors');
 
-final Stream<List<Document>> legColorsStream = streamOfCollection(legColorsCollection);
+Stream<List<Document>> legColorsStream = streamOfCollection(legColorsCollection);
+
+/*
 
 addLegC(String legColor) async{
 
@@ -30,4 +32,4 @@ addLegC(String legColor) async{
         }
 }     
 
-      
+*/
