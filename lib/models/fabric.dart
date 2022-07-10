@@ -5,19 +5,17 @@ import '../services/cloud_functions.dart';
 class Fabric {
   final String fabricModel;
   final List<String> fabricColors;
-  final int selected;
+
   Fabric(
       {
         required this.fabricModel,
         required this.fabricColors,
-        required this.selected,
       });
 
  Map<String, dynamic> getDataMap() {
     return {
       "fabricModel": fabricModel,
       "fabricColors": fabricColors,
-      "selected": selected,
     };
   }
   
@@ -25,21 +23,15 @@ class Fabric {
 
 CollectionReference fabricsCollection = collectionOfItem('Fabrics');
 
-Stream<List<Document>> fabricsStream = streamOfCollection(Firestore.instance.collection('Fabrics'));
-
-updateFabric(String fabricModel,int index) async{
-    await fabricsCollection.document(fabricModel).update({'selected': index});
-}
+Stream<List<Document>> fabricsStream = streamOfCollection(fabricsCollection);
 
 
+addFabric(String fabricModel,List<String> fabricColors) async{
 
-addFabric(String fabricModel,List<String> fabricColors, int selected) async{
-
-        if(!fabricModel.isEmpty && !fabricColors.isEmpty && selected != 0){
+        if(!fabricModel.isEmpty && !fabricColors.isEmpty){
                   Fabric fabricToAdd = Fabric(
                    fabricModel:fabricModel,
                    fabricColors:fabricColors,
-                   selected:selected,
                    );                
                 fabricsCollection.document(fabricModel).set(fabricToAdd.getDataMap());
         }

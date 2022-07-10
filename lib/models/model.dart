@@ -1,21 +1,54 @@
-import 'package:equatable/equatable.dart';
-import 'package:mobily_app/models/leg_color.dart';
-import 'package:mobily_app/models/leg_model.dart';
-import 'package:mobily_app/models/product.dart';
 
-class Models {
-  final String model_name;
+
+
+import 'package:firedart/firedart.dart';
+
+import '../services/cloud_functions.dart';
+
+class Model {
+  final String modelName;
   final List<String> products;
-  final List<String> fabric;
+  final List<String> fabrics;
   final List<String> legColors;
   final List<String> legModels;
-  Models(
-      {required this.products,
-      required this.fabric,
+  
+  Model(
+      {
+        required this.products,
+      required this.fabrics,
       required this.legColors,
       required this.legModels,
-      required this.model_name});
+      required this.modelName
+      });
 
-  @override
-  List<Object> get props => [model_name];
+       Map<String, dynamic> getDataMap() {
+    return {
+      "products": products,
+      "fabrics": fabrics,
+      "legColors": legColors,
+      "legModels": legModels,
+      "modelName": modelName,
+
+     };
+    }
 }
+
+CollectionReference modelsCollection = collectionOfItem('Models');
+
+Stream<List<Document>> modelsStream = streamOfCollection(modelsCollection);
+
+
+addModel(String modelName,List<String> products, fabrics, legColors, legModels) async{
+
+        if(!modelName.isEmpty && !products.isEmpty && !fabrics.isEmpty && !legColors.isEmpty && !legModels.isEmpty){
+                  Model modelToAdd = Model(
+                   modelName:modelName,
+                   products:products,
+                   fabrics:fabrics,
+                   legColors:legColors,
+                   legModels:legModels,
+                   );                
+                modelsCollection.document(modelName).set(modelToAdd.getDataMap());
+        }
+}  
+

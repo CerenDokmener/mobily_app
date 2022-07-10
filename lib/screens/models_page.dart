@@ -91,7 +91,7 @@ class _ModelsPageState extends State<ModelsPage> {
             Padding(
               padding: EdgeInsets.only(right: 80),
               child:
-                  Container(width: 1200, height: 200, child: ModelsListView()),
+                  Container(width: 1200, height: 200, child: ModelListView()),
             ),
             Padding(
               padding: EdgeInsets.only(left: 800, top: 60),

@@ -1,43 +1,23 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
+import 'package:firedart/firestore/models.dart';
 import 'package:flutter/material.dart';
-import 'package:mobily_app/models/leg_color.dart';
-import 'package:mobily_app/models/leg_model.dart';
-import 'package:mobily_app/models/product.dart';
+import 'package:mobily_app/services/cloud_functions.dart';
 
 import '../models/model.dart';
 import '../screens/products_page.dart';
 
-class ModelsListView extends StatefulWidget {
-  ModelsListView({Key? key}) : super(key: key);
+
+
+class ModelListView extends StatefulWidget {
+  const ModelListView({Key? key}) : super(key: key);
 
   @override
-  State<ModelsListView> createState() => _ModelsListViewState();
+  State<ModelListView> createState() => _ModelListViewState();
 }
 
-List<Models> models = [
-  Models(
-      products: [('1 p')],
-      fabric: [('1 k')],
-      legColors: [('c c')],
-      legModels: [('d f')],
-      model_name: 'Palmira'),
-  Models(
-      products: [('1')],
-      fabric: [('1')],
-      legColors: [('c')],
-      legModels: [('d')],
-      model_name: 'Napoli'),
-  Models(
-      products: [('1')],
-      fabric: [('1')],
-      legColors: [('c')],
-      legModels: [('d')],
-      model_name: 'Silver'),
-];
 
-class _ModelsListViewState extends State<ModelsListView> {
-  Widget dropDown(List<String> t) {
+class _ModelListViewState extends State<ModelListView> {
+
+   Widget dropDown(List<String> t,String value) {
     return Container(
       width: 140,
       height: 30,
@@ -47,7 +27,7 @@ class _ModelsListViewState extends State<ModelsListView> {
       child: DropdownButton<String>(
         underline: SizedBox(),
         isExpanded: true,
-        value: null,
+        value: value,
         icon: Icon(
           Icons.keyboard_arrow_down,
           color: Color.fromRGBO(151, 54, 20, 1),
@@ -67,17 +47,31 @@ class _ModelsListViewState extends State<ModelsListView> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        physics: AlwaysScrollableScrollPhysics(),
-        scrollDirection: Axis.vertical,
-        itemCount: models.length,
-        itemBuilder: (context, index) {
-          List<String> fabricList = models[index].fabric;
-          List<String> productslist = models[index].products;
-          List<String> legColorList = models[index].legColors;
-          List<String> legModelList = models[index].legModels;
 
-          return ListTile(
+return SizedBox(
+      child: StreamBuilder<List<Document>>(
+        stream: modelsStream,
+        builder:
+            (BuildContext context, AsyncSnapshot<List<Document>> snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          return snapshot.data!.isEmpty
+              ? const Center(child: Text('Model yok'))
+              : ListView(
+                  primary: false,
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  children: snapshot.data!.map((models) {
+
+                
+                  List<String> legColors = List<String>.from(models['legColors']);
+                  List<String> legModels = List<String>.from(models['legModels']);
+                  List<String> fabrics = List<String>.from(models['fabrics']);
+                  List<String> products = List<String>.from(models['products']);
+
+                   return ListTile(
             title: Column(
               children: [
                 Row(
@@ -85,7 +79,7 @@ class _ModelsListViewState extends State<ModelsListView> {
                     SizedBox(
                       width: 10,
                     ),
-                    Container(width: 90, child: Text(models[index].model_name)),
+                    Container(width: 90, child: Text(models['modelName'])),
                     Column(
                       children: [
                         Divider(
@@ -99,19 +93,19 @@ class _ModelsListViewState extends State<ModelsListView> {
                     SizedBox(
                       width: 45,
                     ),
-                    dropDown(productslist),
+                    dropDown(products,products[0]),
                     SizedBox(
                       width: 40,
                     ),
-                    dropDown(fabricList),
+                    dropDown(fabrics,fabrics[0]),
                     SizedBox(
                       width: 50,
                     ),
-                    dropDown(legModelList),
+                    dropDown(legModels,legModels[0]),
                     SizedBox(
                       width: 40,
                     ),
-                    dropDown(legColorList),
+                    dropDown(legColors,legColors[0]),
                     SizedBox(
                       width: 20,
                     ),
@@ -136,8 +130,7 @@ class _ModelsListViewState extends State<ModelsListView> {
                         color: Colors.brown,
                       ),
                       onPressed: () {
-                        models.removeAt(index);
-                        setState(() {});
+                      deleteItem(models['modelName'], modelsCollection);
                       },
                     ),
                   ],
@@ -151,6 +144,13 @@ class _ModelsListViewState extends State<ModelsListView> {
               ],
             ),
           );
-        });
+                      })
+                      .toList()
+                      .cast(),
+                );
+        },
+      ),
+    );
+    
   }
 }

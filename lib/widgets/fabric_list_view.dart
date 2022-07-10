@@ -14,9 +14,11 @@ class FabricListView extends StatefulWidget {
 }
 
 class _FabricListViewState extends State<FabricListView> {
+
   @override
   Widget build(BuildContext context) {
 
+   
 return SizedBox(
       child: StreamBuilder<List<Document>>(
         stream: fabricsStream,
@@ -37,7 +39,6 @@ return SizedBox(
                 
                   List<String> fabricColors = List<String>.from(fabrics['fabricColors']);
                     
-                   String newValue = fabricColors[fabrics['selected']];
 
            
            return ListTile(
@@ -59,11 +60,10 @@ return SizedBox(
                         underline: SizedBox(),
                         isExpanded: true,
                         onChanged: (String? changedValue) {
-                          updateFabric(fabrics['fabricModel'], fabricColors.indexOf(changedValue.toString()));
                           setState(() {
                           });
                         },
-                        value: newValue,
+                        value: fabricColors[0],
                         icon: Icon(
                           Icons.keyboard_arrow_down,
                           color: Color.fromRGBO(151, 54, 20, 1),
