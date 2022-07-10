@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:mobily_app/screens/add_fabric_page.dart';
 import 'package:mobily_app/screens/products_page.dart';
 import 'package:mobily_app/widgets/fabric_list_view.dart';
 
@@ -96,7 +97,7 @@ class _FabricPageState extends State<FabricPage> {
                       backgroundColor: Color.fromRGBO(174, 93, 64, 1),
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => ProductsPage()));
+                            builder: (context) => AddFabricPage()));
                       },
                     ),
                   ),
