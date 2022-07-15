@@ -8,8 +8,8 @@ import 'package:mobily_app/screens/models_page.dart';
 import 'package:mobily_app/screens/products_page.dart';
 import 'package:mobily_app/widgets/models_list_view.dart';
 import 'package:mobily_app/widgets/products.list.view.dart';
-
 import '../models/product.dart';
+import '../widgets/multi_select.dart';
 
 class AddModelsPage extends StatefulWidget {
   AddModelsPage({Key? key}) : super(key: key);
@@ -18,13 +18,55 @@ class AddModelsPage extends StatefulWidget {
   State<AddModelsPage> createState() => _AddModelsPageState();
 }
 
-List<String> products = ['naem1', 'naem2'];
-
 final modelController = TextEditingController();
+List<String> _products = ['1+1', '2+3', '4', '8'];
+List<String> _fabrics = ['fmeğ', 'fme'];
+List<String> _legColors = ['white', 'red'];
+List<String> _legModels = ['idk', 'tryin'];
 
 class _AddModelsPageState extends State<AddModelsPage> {
-  Widget addRow(
-      String firstText, String secondText, List<String> cl, Widget pageName) {
+  List<String> _selectedProductsItems = [];
+  List<String> _selectedFabricsItems = [];
+  List<String> _selectedLegModelItems = [];
+  List<String> _selectedLegColorItems = [];
+
+  void _showMultiSelect(List<String> _name) async {
+    final List<String>? results = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return MultiSelect(items: _name);
+      },
+    );
+
+    if (_name == _products) {
+      if (results != null) {
+        setState(() {
+          _selectedProductsItems = results;
+        });
+      }
+    } else if (_name == _fabrics) {
+      if (results != null) {
+        setState(() {
+          _selectedFabricsItems = results;
+        });
+      }
+    } else if (_name == _legColors) {
+      if (results != null) {
+        setState(() {
+          _selectedLegColorItems = results;
+        });
+      }
+    } else if (_name == _legModels) {
+      if (results != null) {
+        setState(() {
+          _selectedLegModelItems = results;
+        });
+      }
+    }
+  }
+
+  Widget addRow(String firstText, String secondText, List<String> cl,
+      Widget pageName, List<String> selectClass) {
     return Row(
       children: [
         Padding(
@@ -43,21 +85,14 @@ class _AddModelsPageState extends State<AddModelsPage> {
         Container(
           width: 200,
           height: 40,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black, width: 2),
-          ),
-          child: DropdownButton<String>(
-            underline: SizedBox(),
-            isExpanded: true,
-            value: null,
-            icon: Icon(
-              Icons.keyboard_arrow_down,
-              color: Color.fromRGBO(151, 54, 20, 1),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Colors.teal,
+              onPrimary: Colors.white,
+              onSurface: Colors.grey,
             ),
-            items: cl.map((e) {
-              return DropdownMenuItem(child: Text(e), value: e);
-            }).toList(),
-            onChanged: (value) {},
+            child: const Text('Seçim Yap'),
+            onPressed: () => _showMultiSelect(cl),
           ),
         ),
         SizedBox(
@@ -79,7 +114,24 @@ class _AddModelsPageState extends State<AddModelsPage> {
                   .push(MaterialPageRoute(builder: (context) => pageName));
             },
           ),
-        )
+        ),
+        SizedBox(
+          width: 30,
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Container(
+            width: 400,
+            height: 30,
+            child: Wrap(
+              children: selectClass
+                  .map((e) => Chip(
+                        label: Text(e),
+                      ))
+                  .toList(),
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -144,24 +196,23 @@ class _AddModelsPageState extends State<AddModelsPage> {
         SizedBox(
           height: 30,
         ),
-        addRow('Ürünler', 'Yeni Ürün Oluştur', products, ProductsPage()),
+        addRow('Ürünler', 'Yeni Ürün Oluştur', _products, ProductsPage(),
+            _selectedProductsItems),
         SizedBox(
           height: 10,
         ),
-        addRow('Kumaşlar', 'Yeni Kumaş Oluştur', products, AddFabricPage()),
+        addRow('Kumaşlar', 'Yeni Kumaş Oluştur', _fabrics, ModelsPage(),
+            _selectedFabricsItems),
         SizedBox(
           height: 10,
         ),
-        addRow(
-          'Ayaklar',
-          'Yeni Ayak Oluştur',
-          products,
-          LegsPage(),
-        ),
+        addRow('Ayaklar', 'Yeni Ayak Oluştur', _legModels, LegsPage(),
+            _selectedLegModelItems),
         SizedBox(
           height: 10,
         ),
-        addRow('Ayak Rengi', 'Yeni Ayak Rengi Oluştur', products, LegsPage()),
+        addRow('Ayak Rengi', 'Yeni Ayak Rengi Oluştur', _legColors, LegsPage(),
+            _selectedLegColorItems),
         Padding(
           padding: EdgeInsets.only(left: 800, top: 60),
           child: Container(
