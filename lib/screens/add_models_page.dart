@@ -1,14 +1,9 @@
 // ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
-import 'package:mobily_app/screens/add_fabric_page.dart';
-import 'package:mobily_app/screens/fabric_page.dart';
+import 'package:mobily_app/models/model.dart';
 import 'package:mobily_app/screens/legs_page.dart';
 import 'package:mobily_app/screens/models_page.dart';
 import 'package:mobily_app/screens/products_page.dart';
-import 'package:mobily_app/widgets/models_list_view.dart';
-import 'package:mobily_app/widgets/products.list.view.dart';
-import '../models/product.dart';
 import '../widgets/multi_select.dart';
 
 class AddModelsPage extends StatefulWidget {
@@ -19,10 +14,6 @@ class AddModelsPage extends StatefulWidget {
 }
 
 final modelController = TextEditingController();
-List<String> _products = ['1+1', '2+3', '4', '8'];
-List<String> _fabrics = ['fmeğ', 'fme'];
-List<String> _legColors = ['white', 'red'];
-List<String> _legModels = ['idk', 'tryin'];
 
 class _AddModelsPageState extends State<AddModelsPage> {
   List<String> _selectedProductsItems = [];
@@ -30,33 +21,36 @@ class _AddModelsPageState extends State<AddModelsPage> {
   List<String> _selectedLegModelItems = [];
   List<String> _selectedLegColorItems = [];
 
-  void _showMultiSelect(List<String> _name) async {
+  void _showMultiSelect(String _nameCol, String _nameElement) async {
     final List<String>? results = await showDialog(
       context: context,
       builder: (BuildContext context) {
-        return MultiSelect(items: _name);
+        return MultiSelect(
+          nameCol: _nameCol,
+          nameElement: _nameElement,
+        );
       },
     );
 
-    if (_name == _products) {
+    if (_nameCol == 'ProductNames') {
       if (results != null) {
         setState(() {
           _selectedProductsItems = results;
         });
       }
-    } else if (_name == _fabrics) {
+    } else if (_nameCol == 'Fabrics') {
       if (results != null) {
         setState(() {
           _selectedFabricsItems = results;
         });
       }
-    } else if (_name == _legColors) {
+    } else if (_nameCol == 'LegColors') {
       if (results != null) {
         setState(() {
           _selectedLegColorItems = results;
         });
       }
-    } else if (_name == _legModels) {
+    } else if (_nameCol == 'LegModels') {
       if (results != null) {
         setState(() {
           _selectedLegModelItems = results;
@@ -65,8 +59,15 @@ class _AddModelsPageState extends State<AddModelsPage> {
     }
   }
 
-  Widget addRow(String firstText, String secondText, List<String> cl,
-      Widget pageName, List<String> selectClass) {
+  void saveAndGo(
+      String modelName, List<String> products, fabrics, legColors, legModels) {
+    addModel(modelName, products, fabrics, legColors, legModels);
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => ModelsPage()));
+  }
+
+  Widget addRow(String firstText, String secondText, String nameCol,
+      String nameElement, Widget pageName, List<String> selectClass) {
     return Row(
       children: [
         Padding(
@@ -92,7 +93,10 @@ class _AddModelsPageState extends State<AddModelsPage> {
               onSurface: Colors.grey,
             ),
             child: const Text('Seçim Yap'),
-            onPressed: () => _showMultiSelect(cl),
+            //onPressed: () => _showMultiSelect(cl),
+            onPressed: () {
+              _showMultiSelect(nameCol, nameElement);
+            },
           ),
         ),
         SizedBox(
@@ -196,23 +200,23 @@ class _AddModelsPageState extends State<AddModelsPage> {
         SizedBox(
           height: 30,
         ),
-        addRow('Ürünler', 'Yeni Ürün Oluştur', _products, ProductsPage(),
-            _selectedProductsItems),
+        addRow('Ürünler', 'Yeni Ürün Oluştur', 'ProductNames', 'productName',
+            ProductsPage(), _selectedProductsItems),
         SizedBox(
           height: 10,
         ),
-        addRow('Kumaşlar', 'Yeni Kumaş Oluştur', _fabrics, ModelsPage(),
-            _selectedFabricsItems),
+        addRow('Kumaşlar', 'Yeni Kumaş Oluştur', 'Fabrics', 'fabricModel',
+            ModelsPage(), _selectedFabricsItems),
         SizedBox(
           height: 10,
         ),
-        addRow('Ayaklar', 'Yeni Ayak Oluştur', _legModels, LegsPage(),
-            _selectedLegModelItems),
+        addRow('Ayaklar', 'Yeni Ayak Oluştur', 'LegModels', 'legModel',
+            LegsPage(), _selectedLegModelItems),
         SizedBox(
           height: 10,
         ),
-        addRow('Ayak Rengi', 'Yeni Ayak Rengi Oluştur', _legColors, LegsPage(),
-            _selectedLegColorItems),
+        addRow('Ayak Rengi', 'Yeni Ayak Rengi Oluştur', 'LegColors', 'legColor',
+            LegsPage(), _selectedLegColorItems),
         Padding(
           padding: EdgeInsets.only(left: 800, top: 60),
           child: Container(
@@ -227,8 +231,12 @@ class _AddModelsPageState extends State<AddModelsPage> {
                   borderRadius: BorderRadius.all(Radius.circular(10.0))),
               backgroundColor: Color.fromRGBO(151, 54, 20, 1),
               onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => ModelsPage()));
+                saveAndGo(
+                    modelController.text,
+                    _selectedProductsItems,
+                    _selectedFabricsItems,
+                    _selectedLegColorItems,
+                    _selectedLegModelItems);
               },
             ),
           ),

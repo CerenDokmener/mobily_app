@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mobily_app/widgets/items_list_view.dart';
 import 'package:mobily_app/widgets/products.list.view.dart';
 import '../services/cloud_functions.dart';
 
 import '../widgets/top_nav_bar.dart';
-
 
 class ProductsPage extends StatefulWidget {
   ProductsPage({Key? key}) : super(key: key);
@@ -13,7 +13,6 @@ class ProductsPage extends StatefulWidget {
 }
 
 class _ProductsPageState extends State<ProductsPage> {
-
   Widget mainImage(double width_size, double height_size, double padding_size) {
     return Row(
       children: [
@@ -42,8 +41,6 @@ class _ProductsPageState extends State<ProductsPage> {
   void initState() {
     super.initState();
   }
-
-
 
   final productController = TextEditingController();
 
@@ -80,7 +77,6 @@ class _ProductsPageState extends State<ProductsPage> {
       );
     }
 
-
     return Scaffold(
       body: Column(
         children: [
@@ -100,8 +96,9 @@ class _ProductsPageState extends State<ProductsPage> {
                   child: Container(
                       width: 400.0,
                       height: 200.0,
-                      child: const ProductsListView()
-                      )),
+                      child: const ItemsListView(
+                          nameCol: 'ProductNames',
+                          nameElement: 'productName'))),
               addNewData(),
             ],
           ),

@@ -1,21 +1,19 @@
 import 'package:firedart/firedart.dart';
 import '../services/cloud_functions.dart';
 
-
 class Product {
   final String productName;
-  Product(
-      {required this.productName,
-      });
+  Product({
+    required this.productName,
+  });
 
- Map<String, dynamic> getDataMap() {
+  Map<String, dynamic> getDataMap() {
     return {
       "productName": productName,
     };
   }
-
 }
- 
+
 CollectionReference productsCollection = collectionOfItem('ProductNames');
 
 Stream<List<Document>> productsStream = streamOfCollection(productsCollection);

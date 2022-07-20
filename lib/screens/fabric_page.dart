@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mobily_app/screens/add_fabric_page.dart';
 import 'package:mobily_app/screens/products_page.dart';
 import 'package:mobily_app/widgets/fabric_list_view.dart';
+import 'package:mobily_app/widgets/items_list_view.dart';
 
 import '../widgets/top_nav_bar.dart';
 
@@ -79,7 +80,10 @@ class _FabricPageState extends State<FabricPage> {
                 Padding(
                   padding: EdgeInsets.only(right: 300),
                   child: Container(
-                      width: 520, height: 250, child: FabricListView()),
+                      width: 520,
+                      height: 250,
+                      child:
+                          ItemsListView(nameCol: 'Fabrics', nameElement: '')),
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 450, top: 50),

@@ -5,6 +5,7 @@ import 'package:mobily_app/services/cloud_functions.dart';
 import 'package:mobily_app/widgets/top_nav_bar.dart';
 
 import '../models/leg_color.dart';
+import '../widgets/items_list_view.dart';
 import '../widgets/legsColors_list_view.dart';
 import '../widgets/legs_list_view.dart';
 
@@ -133,7 +134,8 @@ class _LegsPageState extends State<LegsPage> {
                     child: Container(
                         width: 400.0,
                         height: 200.0,
-                        child: const LegsListView())),
+                        child: const ItemsListView(
+                            nameCol: 'LegModels', nameElement: 'legModel'))),
                 addLegModel(),
               ],
             ),
@@ -151,7 +153,8 @@ class _LegsPageState extends State<LegsPage> {
                     child: Container(
                         width: 400.0,
                         height: 200.0,
-                        child: LegsColorsListView())),
+                        child: const ItemsListView(
+                            nameCol: 'LegColors', nameElement: 'legColor'))),
                 addLegColor(),
               ],
             ),
