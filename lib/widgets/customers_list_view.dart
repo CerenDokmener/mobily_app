@@ -1,57 +1,54 @@
-import 'package:firedart/firestore/models.dart';
+import 'dart:core';
+
 import 'package:flutter/material.dart';
-import 'package:mobily_app/services/cloud_functions.dart';
+import 'package:mobily_app/models/customers.dart';
+import 'package:mobily_app/screens/add_customers_page.dart';
 
-import '../models/fabric.dart';
+import '../screens/products_page.dart';
 
-
-
-class FabricListView extends StatefulWidget {
-  const FabricListView({Key? key}) : super(key: key);
+class CustomersListView extends StatefulWidget {
+  CustomersListView({Key? key}) : super(key: key);
 
   @override
-  State<FabricListView> createState() => _FabricListViewState();
+  State<CustomersListView> createState() => _CustomersListViewState();
 }
 
-class _FabricListViewState extends State<FabricListView> {
+List<Customers> customers = [
+  Customers(
+      customerName: 'Yon AVM',
+      ////   username: 'cernn',
+      branches: ['avcilar', '2'],
+      passwordCustomer: '123'),
+  Customers(
+      customerName: 'Kuzey AVM',
+      branches: ['avcilar', 'beylikdüzü'],
+      // username: 'cernn',
+      passwordCustomer: '123'),
+];
 
+String dropdownvalue = 'avcilar';
+
+class _CustomersListViewState extends State<CustomersListView> {
   @override
   Widget build(BuildContext context) {
-
-   
-return SizedBox(
-      child: StreamBuilder<List<Document>>(
-        stream: fabricsStream,
-        builder:
-            (BuildContext context, AsyncSnapshot<List<Document>> snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          return snapshot.data!.isEmpty
-              ? const Center(child: Text('Kumaş yok'))
-              : ListView(
-                  primary: false,
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  children: snapshot.data!.map((fabrics) {
-
-                
-                  List<String> fabricColors = List<String>.from(fabrics['fabricColors']);
-                    
-
-           
-           return ListTile(
+    return ListView.builder(
+        physics: AlwaysScrollableScrollPhysics(),
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: customers.length,
+        itemBuilder: (context, index) {
+          return ListTile(
             title: Column(
               children: [
                 Row(
                   children: [
-                    Text(fabrics['fabricModel']),
+                    Container(
+                        width: 110, child: Text(customers[index].customerName)),
                     SizedBox(
-                      width: 120,
+                      width: 108,
                     ),
                     Container(
-                      width: 140,
+                      width: 180,
                       height: 30,
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.black, width: 2),
@@ -59,24 +56,20 @@ return SizedBox(
                       child: DropdownButton(
                         underline: SizedBox(),
                         isExpanded: true,
-                        onChanged: (String? changedValue) {
-                          setState(() {
-                          });
-                        },
-                        value: fabricColors[0],
+                        value: dropdownvalue,
                         icon: Icon(
                           Icons.keyboard_arrow_down,
                           color: Color.fromRGBO(151, 54, 20, 1),
                         ),
-                        
-                        items: fabricColors.map((String items) {
+                        items: customers[index].branches.map((String items) {
                           return DropdownMenuItem(
                             value: items,
                             child: Text(items),
                           );
                         }).toList(),
-                        
-
+                        onChanged: (String? newValue) {
+                          setState(() {});
+                        },
                       ),
                     ),
                     SizedBox(
@@ -93,7 +86,8 @@ return SizedBox(
                           backgroundColor: Color.fromRGBO(151, 54, 20, 1),
                           child: Text('Düzenle'),
                           onPressed: () {
-                           
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => AddCustomersPage()));
                           }),
                     ),
                     IconButton(
@@ -102,12 +96,12 @@ return SizedBox(
                         color: Colors.brown,
                       ),
                       onPressed: () {
-                        deleteItem(fabrics['fabricModel'], fabricsCollection);
+                        customers.removeAt(index);
+                        setState(() {});
                       },
                     ),
                   ],
                 ),
-                
                 Divider(
                   color: Colors.black,
                   height: 10,
@@ -115,16 +109,8 @@ return SizedBox(
                   endIndent: 10,
                 ),
               ],
-              
             ),
           );
-                      })
-                      .toList()
-                      .cast(),
-                );
-        },
-      ),
-    );
-    
+        });
   }
 }

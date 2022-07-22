@@ -6,8 +6,6 @@ import 'package:mobily_app/widgets/top_nav_bar.dart';
 
 import '../models/leg_color.dart';
 import '../widgets/items_list_view.dart';
-import '../widgets/legsColors_list_view.dart';
-import '../widgets/legs_list_view.dart';
 
 class LegsPage extends StatefulWidget {
   const LegsPage({Key? key}) : super(key: key);

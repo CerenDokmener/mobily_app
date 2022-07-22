@@ -1,20 +1,19 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:mobily_app/screens/add_fabric_page.dart';
-import 'package:mobily_app/screens/products_page.dart';
-import 'package:mobily_app/widgets/items_list_view.dart';
+import 'package:mobily_app/screens/add_customers_page.dart';
+import 'package:mobily_app/widgets/customers_list_view.dart';
 
 import '../widgets/top_nav_bar.dart';
 
-class FabricPage extends StatefulWidget {
-  const FabricPage({Key? key}) : super(key: key);
+class CustomersPage extends StatefulWidget {
+  CustomersPage({Key? key}) : super(key: key);
 
   @override
-  State<FabricPage> createState() => _FabricPageState();
+  State<CustomersPage> createState() => _CustomersPageState();
 }
 
-class _FabricPageState extends State<FabricPage> {
+class _CustomersPageState extends State<CustomersPage> {
   Widget mainImage(double width_size, double height_size, double padding_size) {
     return Row(
       children: [
@@ -27,14 +26,6 @@ class _FabricPageState extends State<FabricPage> {
             child: Image(image: AssetImage('assets/images/38372.png')),
           ),
         ),
-        Padding(
-          padding: EdgeInsets.only(left: 320),
-          child: Container(
-            width: 600,
-            height: 100.0,
-            child: topNavBar(),
-          ),
-        )
       ],
     );
   }
@@ -49,23 +40,24 @@ class _FabricPageState extends State<FabricPage> {
             height: 50,
           ),
           Padding(
-            padding: EdgeInsets.only(left: 450),
+            padding: EdgeInsets.only(
+              left: 300,
+            ),
             child: Column(
               children: [
                 // ignore: prefer_const_literals_to_create_immutables
                 Row(children: [
                   SizedBox(
-                    width: 30,
+                    width: 20,
                   ),
                   Text(
-                    'Kumaşlar',
+                    'Firma Adı',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
-                    width: 100,
+                    width: 200,
                   ),
-                  Text('Kumaş Kodları',
-                      style: TextStyle(fontWeight: FontWeight.bold))
+                  Text('Şubeler', style: TextStyle(fontWeight: FontWeight.bold))
                 ]),
                 Divider(
                   color: Colors.black,
@@ -77,12 +69,12 @@ class _FabricPageState extends State<FabricPage> {
                   height: 10,
                 ),
                 Padding(
-                  padding: EdgeInsets.only(right: 300),
+                  padding: const EdgeInsets.only(right: 370),
                   child: Container(
-                      width: 520,
-                      height: 250,
-                      child:
-                          ItemsListView(nameCol: 'Fabrics', nameElement: '')),
+                    width: 590,
+                    height: 250,
+                    child: CustomersListView(),
+                  ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 450, top: 50),
@@ -92,7 +84,7 @@ class _FabricPageState extends State<FabricPage> {
                     child: FloatingActionButton(
                       heroTag: null,
                       child: Text(
-                        'Yeni Kumaş oluştur',
+                        'Yeni Kullanıcı oluştur',
                       ),
                       shape: RoundedRectangleBorder(
                           borderRadius:
@@ -100,7 +92,7 @@ class _FabricPageState extends State<FabricPage> {
                       backgroundColor: Color.fromRGBO(174, 93, 64, 1),
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => AddFabricPage()));
+                            builder: (context) => AddCustomersPage()));
                       },
                     ),
                   ),
