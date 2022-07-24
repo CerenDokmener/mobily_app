@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:mobily_app/models/customers.dart';
+import 'package:mobily_app/models/branch.dart';
+import 'package:mobily_app/models/company.dart';
 import 'package:mobily_app/screens/customers_page.dart';
-
-import '../widgets/customers_list_view.dart';
+import 'package:mobily_app/widgets/company_radio_list.dart';
 
 class AddCustomersPage extends StatefulWidget {
   AddCustomersPage({Key? key}) : super(key: key);
@@ -13,29 +13,37 @@ class AddCustomersPage extends StatefulWidget {
   State<AddCustomersPage> createState() => _AddCustomersPageState();
 }
 
-final customerNameController = TextEditingController();
-final customerPasswordController = TextEditingController();
-final branchesCustomerController = TextEditingController();
-final usernameBranchController = TextEditingController();
-final passwordBranchController = TextEditingController();
+final companyNameController = TextEditingController();
+final companyPasswordController = TextEditingController();
+final branchNameController = TextEditingController();
+final branchPasswordController = TextEditingController();
 
-List<Branches> branches = [];
+String result = '';
 
 class _AddCustomersPageState extends State<AddCustomersPage> {
-  void _addBranchWidget() {
-    setState(() {
-      customers.add(Customers(
-          customerName: customerNameController.text,
-          passwordCustomer: customerPasswordController.text,
-          branches: [branchesCustomerController.text]));
-      branches.add(Branches(branchesCustomerController.text,
-          usernameBranchController.text, passwordBranchController.text));
-      branchesCustomerController.clear();
-      usernameBranchController.clear();
-      passwordBranchController.clear();
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => CustomersPage()));
-    });
+  void _companyList() async {
+    result = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CompanyRadioList();
+      },
+    );
+    setState(() {});
+  }
+
+  void addAndGo() {
+    if (companyNameController.text.isNotEmpty &&
+        companyPasswordController.text.isNotEmpty) {
+      addCompany(companyNameController.text, companyPasswordController.text);
+    }
+    if (result.isNotEmpty &&
+        branchNameController.text.isNotEmpty &&
+        branchPasswordController.text.isNotEmpty) {
+      addBranch(
+          branchNameController.text, result, branchPasswordController.text);
+    }
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => CustomersPage()));
   }
 
   @override
@@ -117,7 +125,7 @@ class _AddCustomersPageState extends State<AddCustomersPage> {
                               ),
                               child: TextField(
                                 cursorWidth: 2.0,
-                                controller: customerNameController,
+                                controller: companyNameController,
                               ),
                             ),
                             SizedBox(
@@ -132,7 +140,7 @@ class _AddCustomersPageState extends State<AddCustomersPage> {
                               ),
                               child: TextField(
                                 cursorWidth: 2.0,
-                                controller: customerPasswordController,
+                                controller: companyPasswordController,
                               ),
                             ),
                           ],
@@ -202,9 +210,40 @@ class _AddCustomersPageState extends State<AddCustomersPage> {
                                 border:
                                     Border.all(color: Colors.black, width: 1),
                               ),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.teal,
+                                  onPrimary: Colors.white,
+                                  onSurface: Colors.grey,
+                                ),
+                                child: const Text('Firmaları Göster'),
+                                //onPressed: () => _showMultiSelect(cl),
+                                onPressed: () {
+                                  _companyList();
+                                },
+                              ),
+                            ),
+                            SizedBox(
+                              width: 30,
+                            ),
+                            Text(
+                              result,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 15),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Container(
+                              height: 40,
+                              width: 200.0,
+                              decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: Colors.black, width: 1),
+                              ),
                               child: TextField(
                                 cursorWidth: 2.0,
-                                controller: branchesCustomerController,
+                                controller: branchNameController,
                               ),
                             ),
                             SizedBox(
@@ -219,22 +258,7 @@ class _AddCustomersPageState extends State<AddCustomersPage> {
                               ),
                               child: TextField(
                                 cursorWidth: 2.0,
-                                controller: usernameBranchController,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Container(
-                              height: 40,
-                              width: 200.0,
-                              decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: Colors.black, width: 1),
-                              ),
-                              child: TextField(
-                                cursorWidth: 2.0,
-                                controller: passwordBranchController,
+                                controller: branchPasswordController,
                               ),
                             ),
                           ],
@@ -260,7 +284,13 @@ class _AddCustomersPageState extends State<AddCustomersPage> {
                     borderRadius: BorderRadius.all(Radius.circular(10.0))),
                 backgroundColor: Color.fromRGBO(151, 54, 20, 1),
                 onPressed: () {
-                  _addBranchWidget();
+                  addAndGo();
+                  setState(() {
+                    companyNameController.text = '';
+                    companyPasswordController.text = '';
+                    branchNameController.text = '';
+                    branchPasswordController.text = '';
+                  });
                 },
               ),
             ),

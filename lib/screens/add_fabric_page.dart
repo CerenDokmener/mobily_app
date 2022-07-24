@@ -16,10 +16,6 @@ String fabricName = '';
 final fabricController = TextEditingController();
 
 final fabricCodeController = TextEditingController();
-List<Fabric> fabrics = [
-  Fabric(fabricModel: 'neva', fabricColors: ['a12']),
-];
-List<Widget> _fabricCodeList = [];
 
 class _AddFabricPageState extends State<AddFabricPage> {
   void _addFabricCode() {
@@ -170,6 +166,7 @@ class _AddFabricPageState extends State<AddFabricPage> {
                     borderRadius: BorderRadius.all(Radius.circular(10.0))),
                 backgroundColor: Color.fromRGBO(151, 54, 20, 1),
                 onPressed: () {
+                  addFabric(fabricController.text, fabricCodes);
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => FabricPage()));
                 },

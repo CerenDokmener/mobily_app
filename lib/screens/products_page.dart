@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobily_app/widgets/items_list_view.dart';
-import 'package:mobily_app/widgets/products.list.view.dart';
 import '../services/cloud_functions.dart';
-
 import '../widgets/top_nav_bar.dart';
 
 class ProductsPage extends StatefulWidget {

@@ -68,9 +68,7 @@ class _ItemsListViewState extends State<ItemsListView> {
                                       child: DropdownButton(
                                         underline: SizedBox(),
                                         isExpanded: true,
-                                        onChanged: (String? changedValue) {
-                                          setState(() {});
-                                        },
+                                        onChanged: (String? changedValue) {},
                                         value: fabricColors[0],
                                         icon: Icon(
                                           Icons.keyboard_arrow_down,
