@@ -54,9 +54,9 @@ class _ItemsListViewState extends State<ItemsListView> {
                               children: [
                                 Row(
                                   children: [
-                                    Text(items['fabricModel']),
                                     SizedBox(
-                                      width: 120,
+                                      child: Text(items['fabricModel']),
+                                      width: 170,
                                     ),
                                     Container(
                                       width: 140,

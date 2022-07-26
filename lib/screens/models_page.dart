@@ -16,21 +16,40 @@ class ModelsPage extends StatefulWidget {
 }
 
 class _ModelsPageState extends State<ModelsPage> {
+  Widget backButton() {
+    return IconButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        icon: Icon(
+          Icons.arrow_back_rounded,
+          color: Color.fromRGBO(174, 93, 64, 1),
+        ));
+  }
+
   Widget mainImage(double width_size, double height_size, double padding_size) {
     return Row(
       children: [
         Align(
           alignment: Alignment.topLeft,
-          child: Container(
-            padding: EdgeInsets.all(padding_size),
-            width: MediaQuery.of(context).size.width * width_size,
-            height: MediaQuery.of(context).size.height * height_size,
-            child:
-                const Image(image: const AssetImage('assets/images/38372.png')),
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 100, left: 15),
+                child: backButton(),
+              ),
+              Container(
+                padding: EdgeInsets.only(right: 50, top: 50, bottom: 50),
+                width: MediaQuery.of(context).size.width * width_size,
+                height: MediaQuery.of(context).size.height * height_size,
+                child: const Image(
+                    image: const AssetImage('assets/images/38372.png')),
+              ),
+            ],
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 320),
+          padding: const EdgeInsets.only(left: 280),
           child: Container(
             width: 600,
             height: 100.0,
@@ -46,7 +65,7 @@ class _ModelsPageState extends State<ModelsPage> {
     return Scaffold(
         body: Column(
       children: [
-        mainImage(0.25, 0.25, 50),
+        mainImage(0.25, 0.25, 45),
         const SizedBox(
           height: 50,
         ),

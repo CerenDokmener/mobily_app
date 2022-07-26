@@ -148,11 +148,25 @@ class _AddModelsPageState extends State<AddModelsPage> {
           children: [
             Align(
               alignment: Alignment.topLeft,
-              child: Container(
-                padding: EdgeInsets.all(50),
-                width: MediaQuery.of(context).size.width * 0.25,
-                height: MediaQuery.of(context).size.height * 0.25,
-                child: Image(image: AssetImage('assets/images/38372.png')),
+              child: Row(
+                children: [
+                  Padding(
+                      padding: const EdgeInsets.only(bottom: 100, left: 15),
+                      child: IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: Icon(
+                            Icons.arrow_back_rounded,
+                            color: Color.fromRGBO(174, 93, 64, 1),
+                          ))),
+                  Container(
+                    padding: EdgeInsets.all(50),
+                    width: MediaQuery.of(context).size.width * 0.25,
+                    height: MediaQuery.of(context).size.height * 0.25,
+                    child: Image(image: AssetImage('assets/images/38372.png')),
+                  ),
+                ],
               ),
             ),
             Padding(
