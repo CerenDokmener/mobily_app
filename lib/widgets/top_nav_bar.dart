@@ -112,19 +112,19 @@ class _NavBarItemState extends State<NavBarItem> {
           onTap: () {
             switch (widget.text) {
               case 'Modeller':
-                Navigator.of(context).push(
+                Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => ModelsPage()));
                 break;
               case 'Ürünler':
-                Navigator.of(context).push(
+                Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => ProductsPage()));
                 break;
               case 'Kumaşlar':
-                Navigator.of(context).push(MaterialPageRoute(
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (context) => const FabricPage()));
                 break;
               case 'Ayaklar':
-                Navigator.of(context).push(
+                Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => const LegsPage()));
                 break;
               default:
