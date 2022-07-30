@@ -1,4 +1,5 @@
 import 'dart:core';
+import 'package:firedart/firedart.dart';
 import 'package:firedart/firestore/models.dart';
 import 'package:flutter/material.dart';
 import 'package:mobily_app/models/company.dart';
@@ -30,7 +31,7 @@ class _CustomersListViewState extends State<CustomersListView> {
   Widget build(BuildContext context) {
     return SizedBox(
       child: StreamBuilder<List<Document>>(
-        stream: companiesStream,
+        stream: Firestore.instance.collection('Companies').stream,
         builder:
             (BuildContext context, AsyncSnapshot<List<Document>> snapshot) {
           if (!snapshot.hasData) {

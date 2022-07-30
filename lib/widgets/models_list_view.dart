@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firedart/firedart.dart';
 import 'package:firedart/firestore/models.dart';
 import 'package:flutter/material.dart';
 import 'package:mobily_app/services/cloud_functions.dart';
@@ -45,7 +47,7 @@ class _ModelListViewState extends State<ModelListView> {
   Widget build(BuildContext context) {
     return SizedBox(
       child: StreamBuilder<List<Document>>(
-        stream: modelsStream,
+        stream: Firestore.instance.collection('Models').stream,
         builder:
             (BuildContext context, AsyncSnapshot<List<Document>> snapshot) {
           if (!snapshot.hasData) {

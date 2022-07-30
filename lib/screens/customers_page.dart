@@ -46,14 +46,6 @@ class _CustomersPageState extends State<CustomersPage> {
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 280),
-          child: Container(
-            width: 600,
-            height: 100.0,
-            child: topNavBar(),
-          ),
-        )
       ],
     );
   }

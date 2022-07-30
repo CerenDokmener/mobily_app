@@ -15,6 +15,8 @@ class topNavBar extends StatefulWidget {
 Color selected = Color(0xffffffff);
 Color notSelected = Color(0xafffffff);
 
+String currentPage = 'Modeller';
+
 class _topNavBarState extends State<topNavBar> {
   List<Widget> navBarItems = [
     NavBarItem(
@@ -110,24 +112,30 @@ class _NavBarItemState extends State<NavBarItem> {
         color: Colors.transparent,
         child: InkWell(
           onTap: () {
-            switch (widget.text) {
-              case 'Modeller':
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => ModelsPage()));
-                break;
-              case 'Ürünler':
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => ProductsPage()));
-                break;
-              case 'Kumaşlar':
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => const FabricPage()));
-                break;
-              case 'Ayaklar':
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => const LegsPage()));
-                break;
-              default:
+            if (widget.text != currentPage) {
+              switch (widget.text) {
+                case 'Modeller':
+                  currentPage = widget.text;
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => ModelsPage()));
+                  break;
+                case 'Ürünler':
+                  currentPage = widget.text;
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => ProductsPage()));
+                  break;
+                case 'Kumaşlar':
+                  currentPage = widget.text;
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => const FabricPage()));
+                  break;
+                case 'Ayaklar':
+                  currentPage = widget.text;
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => const LegsPage()));
+                  break;
+                default:
+              }
             }
           },
           child: Container(
