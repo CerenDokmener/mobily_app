@@ -42,8 +42,7 @@ class _AddCustomersPageState extends State<AddCustomersPage> {
       addBranch(
           branchNameController.text, result, branchPasswordController.text);
     }
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => CustomersPage()));
+    Navigator.pop(context);
   }
 
   @override
