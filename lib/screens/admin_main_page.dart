@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mobily_app/screens/customers_page.dart';
 import 'package:mobily_app/screens/models_page.dart';
+import 'package:mobily_app/screens/orders_page.dart';
+
+import '../services/globals.dart' as globals;
 
 class AdminMain extends StatelessWidget {
   const AdminMain({Key? key}) : super(key: key);
@@ -8,22 +11,43 @@ class AdminMain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget buttons(Color color, String labelText, Widget pageName) {
-      return Container(
-        width: MediaQuery.of(context).size.width * 0.2,
-        height: MediaQuery.of(context).size.height * 0.07,
-        child: ElevatedButton(
-            style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(color),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0),
-                ))),
-            onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => pageName));
-            },
-            child: Text(labelText)),
-      );
+      if (labelText == 'Siparişler') {
+        return Container(
+          width: MediaQuery.of(context).size.width * 0.2,
+          height: MediaQuery.of(context).size.height * 0.07,
+          child: ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(color),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ))),
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => pageName));
+              },
+              child: Text(labelText)),
+        );
+      } else if (globals.user == 'admin') {
+        return Container(
+          width: MediaQuery.of(context).size.width * 0.2,
+          height: MediaQuery.of(context).size.height * 0.07,
+          child: ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(color),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ))),
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => pageName));
+              },
+              child: Text(labelText)),
+        );
+      } else {
+        return SizedBox();
+      }
     }
 
     return Scaffold(
@@ -40,7 +64,12 @@ class AdminMain extends StatelessWidget {
               ),
             ),
             SizedBox(height: 30),
-            buttons(Color.fromRGBO(171, 92, 65, 1), "Siparişler", ModelsPage()),
+            buttons(
+                Color.fromRGBO(171, 92, 65, 1),
+                "Siparişler",
+                OrdersPage(
+                  status: 'Beklemede',
+                )),
             SizedBox(
               height: 10,
             ),
