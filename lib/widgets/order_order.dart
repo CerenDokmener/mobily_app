@@ -71,12 +71,10 @@ class _OrderOrderState extends State<OrderOrder> {
     );
   }
 
+  bool select = false;
   getDeleteAndUpdate(Document orders) {
     return Row(
       children: [
-        SizedBox(
-          width: 650,
-        ),
         IconButton(
           icon: Icon(
             Icons.delete,
@@ -141,6 +139,16 @@ class _OrderOrderState extends State<OrderOrder> {
                     }),
               )
             : SizedBox(),
+        Checkbox(
+          checkColor: Colors.white,
+          activeColor: Colors.green,
+          value: select,
+          onChanged: (bool? value) {
+            setState(() {
+              select = value!;
+            });
+          },
+        )
       ],
     );
   }

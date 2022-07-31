@@ -60,7 +60,7 @@ class _CustomersListViewState extends State<CustomersListView> {
                             width: 180,
                             height: 30,
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black, width: 2),
+                              border: Border.all(color: Colors.white, width: 2),
                             ),
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(

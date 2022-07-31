@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:firedart/firestore/models.dart';
 import 'package:flutter/material.dart';
 
@@ -24,6 +26,8 @@ List<String> selectedFabricColors = [];
 List<String> selectedLegColors = [];
 List<String> selectedLegModels = [];
 List<String> selectedCustomerNames = [];
+
+bool selectBox = false;
 
 class _OrdersPageState extends State<OrdersPage> {
   @override
@@ -246,7 +250,7 @@ class _OrdersPageState extends State<OrdersPage> {
           child: Row(
             children: [
               Padding(
-                  padding: const EdgeInsets.only(bottom: 100, left: 15),
+                  padding: const EdgeInsets.only(bottom: 70, left: 15),
                   child: IconButton(
                       onPressed: () {
                         Navigator.pop(context);
@@ -256,9 +260,8 @@ class _OrdersPageState extends State<OrdersPage> {
                         color: Color.fromRGBO(174, 93, 64, 1),
                       ))),
               Container(
-                padding: EdgeInsets.all(50),
-                width: MediaQuery.of(context).size.width * 0.25,
-                height: MediaQuery.of(context).size.height * 0.25,
+                width: 220,
+                height: 50,
                 child: Image(image: AssetImage('assets/images/38372.png')),
               ),
               Container(height: 50, width: 800, child: NavBar()),
@@ -314,6 +317,42 @@ class _OrdersPageState extends State<OrdersPage> {
             streamStatus: streamStatus,
           ),
         ),
+        SizedBox(
+          height: 10,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 850),
+          child: Row(
+            children: [
+              Text(
+                'Hepsini Seç: ',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Checkbox(
+                checkColor: Colors.white,
+                activeColor: Colors.green,
+                value: selectBox,
+                onChanged: (bool? value) {
+                  setState(() {
+                    selectBox = value!;
+                  });
+                },
+              ),
+              SizedBox(
+                width: 150,
+                height: 30,
+                child: FloatingActionButton(
+                  onPressed: (() {}),
+                  child: Text('Yazdir'),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                  heroTag: null,
+                  backgroundColor: Color.fromARGB(255, 187, 78, 19),
+                ),
+              ),
+            ],
+          ),
+        )
       ],
     ));
   }

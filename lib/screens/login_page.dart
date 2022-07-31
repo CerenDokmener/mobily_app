@@ -91,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
           child: AnimatedContainer(
             duration: Duration(milliseconds: 300),
             curve: Curves.bounceInOut,
-            height: 300,
+            height: 200,
             padding: EdgeInsets.all(20),
             width: MediaQuery.of(context).size.width - 40,
             margin: EdgeInsets.symmetric(horizontal: 20),
@@ -111,6 +111,17 @@ class _LoginPageState extends State<LoginPage> {
                     margin: EdgeInsets.only(top: 20),
                     child: Column(
                       children: [
+                        Align(
+                          alignment: Alignment.topCenter,
+                          child: Text('Şifre Girişi ',
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromRGBO(150, 54, 21, 1))),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 8.0),
                           child: TextField(
@@ -146,12 +157,9 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
         ),
-        SizedBox(
-          height: 30,
-        ),
         AnimatedPositioned(
-          top: 530,
-          left: 540,
+          top: 470,
+          left: 530,
           width: MediaQuery.of(context).size.width * 0.2,
           height: MediaQuery.of(context).size.height * 0.05,
           duration: Duration(milliseconds: 300),

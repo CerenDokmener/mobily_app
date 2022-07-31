@@ -222,7 +222,7 @@ class _AddCustomersPageState extends State<AddCustomersPage> {
                               width: 200.0,
                               decoration: BoxDecoration(
                                 border:
-                                    Border.all(color: Colors.black, width: 1),
+                                    Border.all(color: Colors.white, width: 1),
                               ),
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(

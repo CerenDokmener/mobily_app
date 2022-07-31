@@ -38,8 +38,7 @@ class _NavBarState extends State<NavBar> {
                   }
                   _second = false;
                   _third = false;
-                  _fourth == false;
-                  selectedPage = 'old';
+                  _fourth = false;
 
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => OrdersPage(status: 'Beklemede')));
@@ -72,8 +71,7 @@ class _NavBarState extends State<NavBar> {
                   }
                   _first = false;
                   _third = false;
-                  _fourth == false;
-                  selectedPage = 'new';
+                  _fourth = false;
 
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => OrdersPage(status: 'Üretiliyor')));
@@ -106,8 +104,7 @@ class _NavBarState extends State<NavBar> {
                   }
                   _first = false;
                   _second = false;
-                  _fourth == false;
-                  selectedPage = 'new';
+                  _fourth = false;
 
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => OrdersPage(status: 'Depoda')));
@@ -138,11 +135,9 @@ class _NavBarState extends State<NavBar> {
                   if (_second == false && _first == false && _third == false) {
                     _fourth = true;
                   }
-                  _third == false;
+                  _third = false;
                   _second = false;
                   _first = false;
-                  selectedPage = 'new';
-
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => OrdersPage(status: 'Tamamlandı')));
                 });
