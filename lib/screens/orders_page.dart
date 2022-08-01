@@ -9,7 +9,6 @@ import '../widgets/navbar.dart';
 
 import '../services/globals.dart' as globals;
 import '../widgets/order_order.dart';
-import '../widgets/search.dart';
 
 class OrdersPage extends StatefulWidget {
   final String status;
@@ -27,6 +26,9 @@ List<String> selectedLegColors = [];
 List<String> selectedLegModels = [];
 List<String> selectedCustomerNames = [];
 
+List<Document> ordersForCheckbox = [];
+
+TextEditingController searchController = TextEditingController();
 bool selectBox = false;
 
 class _OrdersPageState extends State<OrdersPage> {
@@ -224,7 +226,7 @@ class _OrdersPageState extends State<OrdersPage> {
                             addRow('AYAK MODELİ', selectedLegModels),
                             addRow('AYAK RENGİ', selectedLegColors),
                             addRow('ÜRÜN', selectedProducts),
-                            addRow('MÜŞTERİ ADI', selectedCustomerNames),
+                            // addRow('MÜŞTERİ ADI', selectedCustomerNames),
                           ],
                         )
                       ],
@@ -253,6 +255,16 @@ class _OrdersPageState extends State<OrdersPage> {
                   padding: const EdgeInsets.only(bottom: 70, left: 15),
                   child: IconButton(
                       onPressed: () {
+                        selectedModels = [];
+                        selectedProducts = [];
+                        selectedFabrics = [];
+                        selectedFabricColors = [];
+                        selectedLegColors = [];
+                        selectedLegModels = [];
+                        selectedCustomerNames = [];
+                        searchController = TextEditingController();
+                        selectBox = false;
+
                         Navigator.pop(context);
                       },
                       icon: Icon(
@@ -297,7 +309,53 @@ class _OrdersPageState extends State<OrdersPage> {
             SizedBox(
               width: 600,
             ),
-            Search()
+            Container(
+                width: 270,
+                height: 40,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Color.fromRGBO(234, 214, 206, 1),
+                ),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      'Sipariş Ara:',
+                      style: TextStyle(fontSize: 15, color: Colors.black),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: SizedBox(
+                        width: 100,
+                        child: TextField(
+                          controller: searchController,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    ElevatedButton(
+                      onPressed: (() {
+                        setState(() {});
+                      }),
+                      child: Text(
+                        'ARA',
+                        style: TextStyle(fontSize: 15, color: Colors.black),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: Color.fromRGBO(159, 117, 117, 1),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12)),
+                      ),
+                    ),
+                  ],
+                )),
           ],
         ),
         Container(
@@ -312,7 +370,8 @@ class _OrdersPageState extends State<OrdersPage> {
                 selectedLegColors,
                 selectedLegModels,
                 selectedCustomerNames,
-                widget.status),
+                widget.status,
+                searchController.text),
             status: widget.status,
             streamStatus: streamStatus,
           ),
@@ -324,6 +383,7 @@ class _OrdersPageState extends State<OrdersPage> {
           padding: const EdgeInsets.only(left: 850),
           child: Row(
             children: [
+              /*
               Text(
                 'Hepsini Seç: ',
                 style: TextStyle(fontWeight: FontWeight.bold),
@@ -334,15 +394,27 @@ class _OrdersPageState extends State<OrdersPage> {
                 value: selectBox,
                 onChanged: (bool? value) {
                   setState(() {
+                    if (globals.checked) {
+                      globals.checked = false;
+                    } else {
+                      globals.checked = true;
+                    }
                     selectBox = value!;
                   });
                 },
               ),
+              */
               SizedBox(
                 width: 150,
                 height: 30,
                 child: FloatingActionButton(
-                  onPressed: (() {}),
+                  onPressed: (() {
+                    if (globals.orders.isNotEmpty) {
+                      createExcelFile();
+                    } else {
+                      print('Lütfen Yazdırılacak Sipariş Seçin');
+                    }
+                  }),
                   child: Text('Yazdir'),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0))),

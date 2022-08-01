@@ -7,16 +7,18 @@ import 'package:mobily_app/screens/orders_page.dart';
 
 import '../services/cloud_functions.dart';
 
+import '../services/globals.dart' as globals;
+
 class OrderOrder extends StatefulWidget {
   final orders;
   final String status;
   final bool streamStatus;
-  OrderOrder(
-      {Key? key,
-      required this.orders,
-      required this.status,
-      required this.streamStatus})
-      : super(key: key);
+  OrderOrder({
+    Key? key,
+    required this.orders,
+    required this.status,
+    required this.streamStatus,
+  }) : super(key: key);
 
   @override
   State<OrderOrder> createState() => _OrderOrderState();
@@ -71,94 +73,111 @@ class _OrderOrderState extends State<OrderOrder> {
     );
   }
 
-  bool select = false;
-  getDeleteAndUpdate(Document orders) {
-    return Row(
-      children: [
-        IconButton(
-          icon: Icon(
-            Icons.delete,
-            color: Colors.brown,
-          ),
-          onPressed: () {
-            List<String> allOfDoc = orders.toString().split(' ');
-            List<String> justPath = allOfDoc[0].split('/');
-            String orderID = justPath[4];
-
-            deleteOrder(orderID, widget.status);
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => AdminMain()));
-          },
-        ),
-        widget.status != 'Beklemede'
-            ? SizedBox(
-                width: 150,
-                height: 30,
-                child: FloatingActionButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                    heroTag: null,
-                    backgroundColor: Color.fromRGBO(151, 54, 20, 1),
-                    child: Text(widget.status != 'Üretiliyor'
-                        ? widget.status == 'Depoda'
-                            ? 'Üretime Taşı'
-                            : 'Depoya Taşı'
-                        : 'Beklemeye taşı'),
-                    onPressed: () {
-                      updateOrder(widget.status, orders, true);
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => OrdersPage(
-                                status: widget.status,
-                              )));
-                    }),
-              )
-            : SizedBox(),
-        SizedBox(
-          width: 10,
-        ),
-        widget.status != 'Tamamlandı'
-            ? SizedBox(
-                width: 150,
-                height: 30,
-                child: FloatingActionButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                    heroTag: null,
-                    backgroundColor: Color.fromRGBO(151, 54, 20, 1),
-                    child: Text(widget.status != 'Beklemede'
-                        ? widget.status == 'Üretiliyor'
-                            ? 'Depoya Taşı'
-                            : 'Tamamlandıya Taşı'
-                        : 'Üretime Taşı'),
-                    onPressed: () {
-                      updateOrder(widget.status, orders, false);
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => OrdersPage(
-                                status: widget.status,
-                              )));
-                    }),
-              )
-            : SizedBox(),
-        Checkbox(
-          checkColor: Colors.white,
-          activeColor: Colors.green,
-          value: select,
-          onChanged: (bool? value) {
-            setState(() {
-              select = value!;
-            });
-          },
-        )
-      ],
-    );
-  }
+  List<Document> orderDocs = [];
+  //List<Document> listedOrders = [];
 
   @override
   Widget build(BuildContext context) {
+    getDeleteAndUpdate(Document orders) {
+      bool value = false;
+
+      if (orderDocs.contains(orders)) {
+        value = true;
+      } else {
+        value = false;
+      }
+
+      return Row(
+        children: [
+          IconButton(
+            icon: Icon(
+              Icons.delete,
+              color: Colors.brown,
+            ),
+            onPressed: () {
+              List<String> allOfDoc = orders.toString().split(' ');
+              List<String> justPath = allOfDoc[0].split('/');
+              String orderID = justPath[4];
+
+              deleteOrder(orderID, widget.status);
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => AdminMain()));
+            },
+          ),
+          widget.status != 'Beklemede'
+              ? SizedBox(
+                  width: 150,
+                  height: 30,
+                  child: FloatingActionButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(10.0))),
+                      heroTag: null,
+                      backgroundColor: Color.fromRGBO(151, 54, 20, 1),
+                      child: Text(widget.status != 'Üretiliyor'
+                          ? widget.status == 'Depoda'
+                              ? 'Üretime Taşı'
+                              : 'Depoya Taşı'
+                          : 'Beklemeye taşı'),
+                      onPressed: () {
+                        updateOrder(widget.status, orders, true);
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => OrdersPage(
+                                  status: widget.status,
+                                )));
+                      }),
+                )
+              : SizedBox(),
+          SizedBox(
+            width: 10,
+          ),
+          widget.status != 'Tamamlandı'
+              ? SizedBox(
+                  width: 150,
+                  height: 30,
+                  child: FloatingActionButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(10.0))),
+                      heroTag: null,
+                      backgroundColor: Color.fromRGBO(151, 54, 20, 1),
+                      child: Text(widget.status != 'Beklemede'
+                          ? widget.status == 'Üretiliyor'
+                              ? 'Depoya Taşı'
+                              : 'Tamamlandıya Taşı'
+                          : 'Üretime Taşı'),
+                      onPressed: () {
+                        updateOrder(widget.status, orders, false);
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => OrdersPage(
+                                  status: widget.status,
+                                )));
+                      }),
+                )
+              : SizedBox(),
+          Checkbox(
+            checkColor: Colors.white,
+            activeColor: Colors.green,
+            value: value,
+            onChanged: (bool? value) {
+              setState(() {
+                if (orderDocs.contains(orders)) {
+                  orderDocs.remove(orders);
+                } else {
+                  orderDocs.add(orders);
+                }
+                globals.orders = orderDocs;
+              });
+            },
+          ),
+        ],
+      );
+    }
+
     if (widget.streamStatus) {
       return Container(
-        child: StreamBuilder<List<Document>>(
-          stream: Stream.fromFuture(widget.orders),
+        child: FutureBuilder<List<Document>>(
+          future: widget.orders,
           builder:
               (BuildContext context, AsyncSnapshot<List<Document>> snapshot) {
             if (!snapshot.hasData) {

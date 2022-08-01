@@ -183,8 +183,7 @@ class _AddFabricPageState extends State<AddFabricPage> {
                 onPressed: () {
                   addFabric(fabricController.text, fabricCodes);
                   fabricCodes.clear();
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => FabricPage()));
+                  Navigator.of(context).pop();
                 },
               ),
             ),

@@ -62,8 +62,7 @@ class _AddModelsPageState extends State<AddModelsPage> {
   void saveAndGo(
       String modelName, List<String> products, fabrics, legColors, legModels) {
     addModel(modelName, products, fabrics, legColors, legModels);
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => ModelsPage()));
+    Navigator.of(context).pop();
   }
 
   Widget addRow(String firstText, String secondText, String nameCol,
