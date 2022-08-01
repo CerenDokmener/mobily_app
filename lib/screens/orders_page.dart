@@ -415,7 +415,7 @@ class _OrdersPageState extends State<OrdersPage> {
                       print('Lütfen Yazdırılacak Sipariş Seçin');
                     }
                   }),
-                  child: Text('Yazdir'),
+                  child: Text('Yazdır'),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0))),
                   heroTag: null,

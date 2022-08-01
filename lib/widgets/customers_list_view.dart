@@ -54,8 +54,10 @@ class _CustomersListViewState extends State<CustomersListView> {
                               width: 110,
                               child: Text(companies['companyName'])),
                           SizedBox(
-                            width: 108,
+                            width: 10,
                           ),
+                          Container(
+                              width: 110, child: Text(companies['password'])),
                           Container(
                             width: 180,
                             height: 30,
@@ -77,22 +79,6 @@ class _CustomersListViewState extends State<CustomersListView> {
                           ),
                           const SizedBox(
                             width: 20,
-                          ),
-                          SizedBox(
-                            width: 100,
-                            height: 25,
-                            child: FloatingActionButton(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(10.0))),
-                                heroTag: null,
-                                backgroundColor: Color.fromRGBO(151, 54, 20, 1),
-                                child: Text('Düzenle'),
-                                onPressed: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          AddCustomersPage()));
-                                }),
                           ),
                           IconButton(
                             icon: Icon(

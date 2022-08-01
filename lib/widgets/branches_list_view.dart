@@ -38,7 +38,18 @@ class _BranchesListState extends State<BranchesList> {
                     children: snapshot.data!
                         .map((items) {
                           return ListTile(
-                            title: Text(items['branchName']),
+                            title: Column(children: [
+                              Row(children: [
+                                Container(
+                                    width: 110,
+                                    child: Text(items['branchName'])),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Container(
+                                    width: 110, child: Text(items['password'])),
+                              ])
+                            ]),
                             leading: IconButton(
                               icon: Icon(Icons.delete),
                               onPressed: () {

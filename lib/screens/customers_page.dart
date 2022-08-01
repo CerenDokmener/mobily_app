@@ -75,7 +75,14 @@ class _CustomersPageState extends State<CustomersPage> {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
-                    width: 200,
+                    width: 50,
+                  ),
+                  Text(
+                    'Şifre',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    width: 150,
                   ),
                   Text('Şubeler', style: TextStyle(fontWeight: FontWeight.bold))
                 ]),
