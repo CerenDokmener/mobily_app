@@ -38,7 +38,7 @@ class _OrdersPageState extends State<OrdersPage> {
 
     void showCheckList(String nameCol, String nameElement) async {
       Future<List<String>> future;
-      List<String> results = [];
+      List<String>? results = [];
       String status = '';
       switch (widget.status) {
         case 'Beklemede':
@@ -87,38 +87,42 @@ class _OrdersPageState extends State<OrdersPage> {
           },
         );
       }
-
-      switch (nameCol) {
-        case 'Models':
-          selectedModels = results;
-          break;
-        case 'Fabrics':
-          selectedFabrics = results;
-          break;
-        case 'FabricColors':
-          selectedFabricColors = results;
-          break;
-        case 'LegModels':
-          selectedLegModels = results;
-          break;
-        case 'LegColors':
-          selectedLegColors = results;
-          break;
-        case 'ProductNames':
-          selectedProducts = results;
-          break;
-        case 'CustomerNames':
-          selectedCustomerNames = results;
-          break;
+      if (results != null) {
+        switch (nameCol) {
+          case 'Models':
+            selectedModels = results;
+            break;
+          case 'Fabrics':
+            selectedFabrics = results;
+            break;
+          case 'FabricColors':
+            selectedFabricColors = results;
+            break;
+          case 'LegModels':
+            selectedLegModels = results;
+            break;
+          case 'LegColors':
+            selectedLegColors = results;
+            break;
+          case 'ProductNames':
+            selectedProducts = results;
+            break;
+          case 'CustomerNames':
+            selectedCustomerNames = results;
+            break;
+        }
       }
     }
 
     addRow(String typeName, List<String> selectedItems) {
       return Row(
         children: [
-          Text(
-            typeName,
-            style: TextStyle(color: Colors.white),
+          Container(
+            width: 140,
+            child: Text(
+              typeName,
+              style: TextStyle(color: Colors.white),
+            ),
           ),
           SizedBox(
             width: 10,
@@ -218,13 +222,29 @@ class _OrdersPageState extends State<OrdersPage> {
                         Column(
                           children: [
                             SizedBox(
-                              height: 10,
+                              height: 70,
                             ),
                             addRow('MODEL', selectedModels),
+                            SizedBox(
+                              height: 10,
+                            ),
+
                             addRow('KUMAŞ', selectedFabrics),
+                            SizedBox(
+                              height: 10,
+                            ),
                             addRow('KUMAŞ RENGİ', selectedFabricColors),
+                            SizedBox(
+                              height: 10,
+                            ),
                             addRow('AYAK MODELİ', selectedLegModels),
+                            SizedBox(
+                              height: 10,
+                            ),
                             addRow('AYAK RENGİ', selectedLegColors),
+                            SizedBox(
+                              height: 10,
+                            ),
                             addRow('ÜRÜN', selectedProducts),
                             // addRow('MÜŞTERİ ADI', selectedCustomerNames),
                           ],
@@ -409,11 +429,14 @@ class _OrdersPageState extends State<OrdersPage> {
                 height: 30,
                 child: FloatingActionButton(
                   onPressed: (() {
-                    if (globals.orders.isNotEmpty) {
-                      createExcelFile();
-                    } else {
-                      print('Lütfen Yazdırılacak Sipariş Seçin');
-                    }
+                    setState(() {
+                      if (globals.orders.isNotEmpty) {
+                        createExcelFile();
+                        globals.orders = [];
+                      } else {
+                        print('Lütfen Yazdırılacak Sipariş Seçin');
+                      }
+                    });
                   }),
                   child: Text('Yazdır'),
                   shape: RoundedRectangleBorder(

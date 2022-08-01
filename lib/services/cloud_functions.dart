@@ -354,14 +354,14 @@ globalStyle.borders.all.color = '#9954CC';
 
   List<Document> orderDocs = globals.orders;
 
-  sheet.getRangeByName('A1').columnWidth = 15;
+  sheet.getRangeByName('A1').columnWidth = 12;
   sheet.getRangeByName('B1').columnWidth = 22;
-  sheet.getRangeByName('C1').columnWidth = 8;
+  sheet.getRangeByName('C1').columnWidth = 6;
   sheet.getRangeByName('D1').columnWidth = 22;
-  sheet.getRangeByName('E1').columnWidth = 6;
-  sheet.getRangeByName('F1').columnWidth = 8;
-  sheet.getRangeByName('G1').columnWidth = 8;
-  sheet.getRangeByName('H1').columnWidth = 4;
+  sheet.getRangeByName('E1').columnWidth = 4;
+  sheet.getRangeByName('F1').columnWidth = 2;
+  sheet.getRangeByName('G1').columnWidth = 5;
+  sheet.getRangeByName('H1').columnWidth = 3;
 
   for (int i = 1; orderDocs.length + 1 > i; i++) {
     int a = 5 * (i - 1);

@@ -111,6 +111,8 @@ class _ModelListViewState extends State<ModelListView> {
                                   SizedBox(
                                     width: 20,
                                   ),
+                                  /*
+                                  
                                   SizedBox(
                                     width: 100,
                                     height: 25,
@@ -129,6 +131,7 @@ class _ModelListViewState extends State<ModelListView> {
                                                       ProductsPage()));
                                         }),
                                   ),
+                                  */
                                   IconButton(
                                     icon: Icon(
                                       Icons.delete,

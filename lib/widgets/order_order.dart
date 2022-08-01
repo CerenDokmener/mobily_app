@@ -73,7 +73,7 @@ class _OrderOrderState extends State<OrderOrder> {
     );
   }
 
-  List<Document> orderDocs = [];
+  //List<Document> orderDocs = [];
   //List<Document> listedOrders = [];
 
   @override
@@ -81,7 +81,7 @@ class _OrderOrderState extends State<OrderOrder> {
     getDeleteAndUpdate(Document orders) {
       bool value = false;
 
-      if (orderDocs.contains(orders)) {
+      if (globals.orders.contains(orders)) {
         value = true;
       } else {
         value = false;
@@ -161,12 +161,11 @@ class _OrderOrderState extends State<OrderOrder> {
             value: value,
             onChanged: (bool? value) {
               setState(() {
-                if (orderDocs.contains(orders)) {
-                  orderDocs.remove(orders);
+                if (globals.orders.contains(orders)) {
+                  globals.orders.remove(orders);
                 } else {
-                  orderDocs.add(orders);
+                  globals.orders.add(orders);
                 }
-                globals.orders = orderDocs;
               });
             },
           ),

@@ -85,6 +85,8 @@ class _ItemsListViewState extends State<ItemsListView> {
                                     SizedBox(
                                       width: 20,
                                     ),
+                                    /*
+                                    
                                     SizedBox(
                                       width: 100,
                                       height: 25,
@@ -98,6 +100,7 @@ class _ItemsListViewState extends State<ItemsListView> {
                                           child: Text('Düzenle'),
                                           onPressed: () {}),
                                     ),
+                                    */
                                     IconButton(
                                       icon: Icon(
                                         Icons.delete,
