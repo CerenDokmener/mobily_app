@@ -237,6 +237,7 @@ class _OrdersPageState extends State<OrdersPage> {
                             SizedBox(
                               height: 10,
                             ),
+                            /*
                             addRow('AYAK MODELİ', selectedLegModels),
                             SizedBox(
                               height: 10,
@@ -246,6 +247,7 @@ class _OrdersPageState extends State<OrdersPage> {
                               height: 10,
                             ),
                             addRow('ÜRÜN', selectedProducts),
+                            */
                             // addRow('MÜŞTERİ ADI', selectedCustomerNames),
                           ],
                         )

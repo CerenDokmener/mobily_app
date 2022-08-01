@@ -386,9 +386,9 @@ globalStyle.borders.all.color = '#9954CC';
     sheet.getRangeByIndex(4 + a, 1).cellStyle.backColor = '#D3D3D3';
     sheet
         .getRangeByName(
-            'A' + (5 + a).toString() + ':' + 'H' + (5 + a).toString())
+            'A' + (7 + a).toString() + ':' + 'H' + (7 + a).toString())
         .merge();
-    sheet.getRangeByName('A' + (5 + a).toString()).cellStyle.backColor =
+    sheet.getRangeByName('A' + (7 + a).toString()).cellStyle.backColor =
         '#000000';
 
     /////////////////
@@ -407,9 +407,21 @@ globalStyle.borders.all.color = '#9954CC';
         CellBorder(LineStyle.thin, '#000000');
     sheet.getRangeByIndex(2 + a, 2).cellStyle.hAlign = HAlignType.center;
 
-    sheet
-        .getRangeByIndex(3 + a, 2)
-        .setText(orderDocs[i - 1]['companyOrBranchName'].toString());
+    String branch = '';
+    if (await collectionOfItem('Branches')
+        .document(orderDocs[i - 1]['companyOrBranchName'])
+        .exists) {
+      Document doc = await collectionOfItem('Branches')
+          .document(orderDocs[i - 1]['companyOrBranchName'])
+          .get();
+      Map<String, dynamic> docValue = doc.map;
+      branch = docValue['belongedCompany'].toString();
+    } else {
+      branch = orderDocs[i - 1]['companyOrBranchName'].toString();
+    }
+
+    sheet.getRangeByIndex(3 + a, 2).setText(
+        branch + '/' + orderDocs[i - 1]['companyOrBranchName'].toString());
     sheet.getRangeByIndex(3 + a, 2).cellStyle.borders.all =
         CellBorder(LineStyle.thin, '#000000');
     sheet.getRangeByIndex(3 + a, 2).cellStyle.hAlign = HAlignType.center;
@@ -485,28 +497,6 @@ globalStyle.borders.all.color = '#9954CC';
               orderDocs[i - 1]['orderByLegModels'][b].toString() +
               '-' +
               orderDocs[i - 1]['orderByLegColors'][b].toString());
-
-      if (b == 3) {
-        sheet.getRangeByName('C' + (b + 1 + a).toString()).setText(
-            items[b - 1].toString() +
-                ': ' +
-                orderDocs[i - 1]['orderByFabrics'][b - 1].toString() +
-                '-' +
-                orderDocs[i - 1]['orderByFabricColors'][b - 1].toString() +
-                '-' +
-                orderDocs[i - 1]['orderByLegModels'][b - 1].toString() +
-                '-' +
-                orderDocs[i - 1]['orderByLegColors'][b - 1].toString() +
-                items[b].toString() +
-                ': ' +
-                orderDocs[i - 1]['orderByFabrics'][b].toString() +
-                '-' +
-                orderDocs[i - 1]['orderByFabricColors'][b].toString() +
-                '-' +
-                orderDocs[i - 1]['orderByLegModels'][b].toString() +
-                '-' +
-                orderDocs[i - 1]['orderByLegColors'][b].toString());
-      }
     }
   }
 

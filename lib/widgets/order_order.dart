@@ -229,8 +229,11 @@ class _OrderOrderState extends State<OrderOrder> {
                                                 ),
                                                 rowLeft(
                                                     'Bayi- Şube:',
-                                                    orders[
-                                                        'companyOrBranchName']),
+                                                    orders['companyOrBranchName']
+                                                            .toString() +
+                                                        '/' +
+                                                        orders['branchName']
+                                                            .toString()),
                                                 Container(
                                                   color: Colors.black,
                                                   height: 2,
